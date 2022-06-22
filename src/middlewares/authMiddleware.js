@@ -1,8 +1,9 @@
 const jwt = require('jsonwebtoken')
 const authConstants = require('../config/authConstants')
 
-module.exports = (res, req, next) => {
-    let token = res.cookie[authConstants.cookieName]
+module.exports = (req, res, next) => {
+    console.log(req.cookies);
+    let token = req.cookies[authConstants.cookieName]
     if(token){
         jwt.verify(token,authConstants.secret,(err, decodedToken) => {
             if(err){
@@ -12,6 +13,7 @@ module.exports = (res, req, next) => {
                 }
             }
             req.user = decodedToken
+            res.locals.user = decodedToken
         })
     }
     next()
