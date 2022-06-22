@@ -78,10 +78,11 @@ exports.isCarImagePresent = (carImageInput) => {
 }
 
 exports.areCarSeatsValid = (carSeatsInput) => {
+    console.log(typeof carSeatsInput)
     let isValid = !isNaN(carSeatsInput)
     if(!isValid){
         throw{
-            message: 'Please enter a number!'
+            message: 'Please enter a number representing available seats!'
         }
     }
     else if(carSeatsInput == ``){
@@ -104,7 +105,7 @@ exports.isPriceValid = (price) => {
     let isValid = !isNaN(price)
     if(!isValid){
         throw{
-            message: 'Please enter a number!'
+            message: 'Please enter a number representing trip\'s price!'
         }
     }
     else if(carSeatsInput == ``){
@@ -121,4 +122,26 @@ exports.isDescriptionValid = (description) => {
             message:'Please enter some description about your trip!'
         }
     }
+}
+
+exports.isDateValid = (date) => {
+    let currDate = new Date().toISOString().split("T")[0].split('-').map(Number)
+    let [currYear, currMonth, currDay] = currDate
+    date = date.split('-').map(Number)
+    let [year, month, day] = date
+     if(year < currYear){
+        throw{
+            message : 'You can\'t choose a date that has already passed, for your trip'
+        }
+     }
+     else if(month < currMonth){
+        throw{
+            message : 'You can\'t choose a date that has already passed, for your trip'
+        }
+     }
+     else if(day < currDay){
+        throw{
+            message : 'You can\'t choose a date that has already passed, for your trip'
+        }
+     }
 }
