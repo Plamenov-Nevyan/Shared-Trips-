@@ -21,8 +21,26 @@ router.get('/profile', (req,res) => {
     res.render('profile')
 })
 
-router.get('/login', (req, res) => {
-    res.render('login')
+router.get('/login', (req, res, next) => {
+    try{res.render('login')}
+    catch(err){next(err)}
+})
+router.post('/login', async (req, res, next) => {
+   try{
+        let user = await authServices.checkIfUserHaveAccount(req.body.email, req.body.password)
+        let token = jwt.sign({email: user.email, _id: user._id}, authConstants.secret, {expiresIn:'2d'})
+        res.cookie = (authConstants.cookieName, token, {httpOnly:true})
+        res.redirect('/')
+   }
+   catch(err){
+        if(err.hasOwnProperty('status')){
+            next(err)
+        }
+        else{
+        res.locals.error = err
+        res.render('login')
+        }
+   }
 })
 
 

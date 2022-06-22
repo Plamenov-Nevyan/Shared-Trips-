@@ -13,7 +13,29 @@ const registerUser = async (userData) => {
    })
 }
 
+const checkIfUserHaveAccount = async (email, password) => {
+  let user = await User.findOne({email}).lean()
+  if(user){
+      let isPassCorrect = await bcrypt.compare(password, user.password)
+      if(isPassCorrect){
+        return user
+      }
+      else {
+        throw {
+          message : 'Username or password is incorrect!'
+        }
+      }
+  }
+  else{
+      throw {
+        message : 'Username or password is incorrect!'
+      }
+  }
+}
+
+
 module.exports = {
     checkIfUserExists,
+    checkIfUserHaveAccount,
     registerUser
 }
