@@ -62,7 +62,17 @@ router.post('/register',registerMiddleware,(req,res,next) => {
         res.redirect('/')
     }
    })
-   .catch(err => next(err))
 })
+
+   router.get('/logout', (req,res, next) => {
+    try{
+        res.clearCookie(authConstants.cookieName)
+        res.redirect('/')
+    }
+    catch(err){
+        console.log(err) 
+        next(err)}
+   })
+
 
 module.exports = router
