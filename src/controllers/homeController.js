@@ -29,7 +29,7 @@ router.post('/login', async (req, res, next) => {
    try{
         let user = await authServices.checkIfUserHaveAccount(req.body.email, req.body.password)
         let token = jwt.sign({email: user.email, _id: user._id}, authConstants.secret, {expiresIn:'2d'})
-        res.cookie = (authConstants.cookieName, token, {httpOnly:true})
+        res.cookie(authConstants.cookieName, token, {httpOnly:true})
         res.redirect('/')
    }
    catch(err){
@@ -59,7 +59,6 @@ router.post('/register',registerMiddleware,(req,res,next) => {
         let user = await authServices.registerUser(req.body)
          let token = jwt.sign({email:user.email, _id:user._id}, authConstants.secret,{expiresIn:'2d'})
         res.cookie(authConstants.cookieName,token, {httpOnly: true})
-        console.log(res.cookie);
         res.redirect('/')
     }
    })
