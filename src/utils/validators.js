@@ -1,5 +1,6 @@
 const emailRegex = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/
 const passwordRegex = /^[a-zA-Z0-9]+$/
+const imageRegex = /^http/
 
 exports.isEmailValid = (email) => {
   let isValid = emailRegex.test(email)
@@ -55,6 +56,69 @@ exports.areFieldsEmpty = (fields) => {
     if(fields.includes('')){
         throw{
             message: 'Please fill all the required information!'
+        }
+    }
+}
+
+exports.areDestinationsPresent = (startPoint, endPoint) => {
+    let isValid = startPoint !== `` && endPoint !== ``
+    if(!isValid){
+        throw{
+            message : 'Please enter your trip\'s start/end point!'
+        }
+    }
+}
+exports.isCarImagePresent = (carImageInput) => {
+    let isValid = imageRegex.test(carImageInput)
+    if(!isValid){
+        throw{
+            message: 'Please enter valid image url!'
+        }
+    }
+}
+
+exports.areCarSeatsValid = (carSeatsInput) => {
+    let isValid = !isNaN(carSeatsInput)
+    if(!isValid){
+        throw{
+            message: 'Please enter a number!'
+        }
+    }
+    else if(carSeatsInput == ``){
+        throw{
+            message: 'Info about vehicle seats is required!'
+        }
+    }
+}
+
+exports.isCarBrandValid = (carBrand) => {
+    let isValid = carBrand !== ``
+    if(!isValid){
+        throw{
+            message: 'Vehicle brand is required!'
+        }
+    }
+}
+
+exports.isPriceValid = (price) => {
+    let isValid = !isNaN(price)
+    if(!isValid){
+        throw{
+            message: 'Please enter a number!'
+        }
+    }
+    else if(carSeatsInput == ``){
+        throw{
+            message: 'Trip price is required!'
+        }
+    }
+}
+
+exports.isDescriptionValid = (description) => {
+    let isValid = description !== ``
+    if(!isValid){
+        throw{
+            message:'Please enter some description about your trip!'
         }
     }
 }
