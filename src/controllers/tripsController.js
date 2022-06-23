@@ -23,4 +23,20 @@ router.post('/trips-offer',createMiddleware,(req, res, next) => {
    .catch(err => next(err))
 })
 
+router.get('/details/:tripId', (req, res, next) => {
+    tripServices.getTripDetails(req.params.tripId)
+    .then((trip) => {
+        console.log(trip);
+        trip.areBuddiesAvailable = trip.buddies.length > 0
+        trip.isOwner = trip.creator._id == req.user._id
+        trip.hasJoined = trip.buddies.map(buddy => buddy.email).includes(req.user.email)
+        trip.seats = trip.seats - trip.buddies.length
+        if(trip.seats - 1 < 0){trip.areSeatsAvailable = false}
+        else{
+            trip.areSeatsAvailable = true
+        } 
+        res.render('trip-details', {trip, user: req.user})
+    })
+    .catch(err => next(err))
+})
 module.exports = router
