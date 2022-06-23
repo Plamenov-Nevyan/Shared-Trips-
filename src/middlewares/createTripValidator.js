@@ -18,6 +18,7 @@ const {
             isCarBrandValid(req.body.carBrand) 
             isPriceValid(req.body.price) 
             isDescriptionValid(req.body.description)
+            next()
         }
         catch(err){
             res.locals.error = err

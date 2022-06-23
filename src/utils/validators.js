@@ -78,7 +78,6 @@ exports.isCarImagePresent = (carImageInput) => {
 }
 
 exports.areCarSeatsValid = (carSeatsInput) => {
-    console.log(typeof carSeatsInput)
     let isValid = !isNaN(carSeatsInput)
     if(!isValid){
         throw{
@@ -108,7 +107,7 @@ exports.isPriceValid = (price) => {
             message: 'Please enter a number representing trip\'s price!'
         }
     }
-    else if(carSeatsInput == ``){
+    else if(price == ``){
         throw{
             message: 'Trip price is required!'
         }
