@@ -33,9 +33,11 @@ const checkIfUserHaveAccount = async (email, password) => {
   }
 }
 
+const getUserProfile = (userId) => User.findById(userId).populate('tripsHistory').lean()
 
 module.exports = {
     checkIfUserExists,
     checkIfUserHaveAccount,
-    registerUser
+    registerUser,
+    getUserProfile
 }

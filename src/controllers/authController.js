@@ -9,8 +9,10 @@ router.get('/', (req, res, next) => {
    catch(err){next(err)}
 })
 
-router.get('/profile', (req,res) => {
-    res.render('profile')
+router.get('/profile/:userId', (req,res,next) => {
+  authServices.getUserProfile(req.params.userId)
+    .then((user) => res.render('profile', {user}))
+    .catch(err => next(err))
 })
 
 router.get('/login', (req, res, next) => {
